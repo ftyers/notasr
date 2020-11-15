@@ -56,6 +56,8 @@ def score(model, token_to_idx, idx_to_token, seed_phrase):
     best_op = ""
     best_mapping_t2i = {}#cp_token_to_idx
     best_mapping_i2t = {}#cp_idx_to_token
+
+    # with only |V| of 3 we probably don't need to permute 100 times :D 
     for j in range(0, 100):
         print(j, '---------------------------------------')
         cp_idx_to_token = copy.copy(idx_to_token)
@@ -113,6 +115,7 @@ def score(model, token_to_idx, idx_to_token, seed_phrase):
             c = cp_idx_to_token[sequence[i]]
             c2 = idx_to_token[sequence[i]]
             ci = cp_token_to_idx[c]
+            # should this be + or should it be * ?
             score += probs[ci]
             print(c2,'|||', c,'|||', sequence[i], probs[ci], input_tensor,  file=sys.stderr)
             op += c2
